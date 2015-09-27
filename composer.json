@@ -10,6 +10,7 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
+        "maddoger/yii2-cms-core": "*",
         "bower-asset/font-awesome": "4.*"
     },
     "autoload": {
