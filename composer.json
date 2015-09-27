@@ -1,0 +1,24 @@
+{
+    "name": "maddoger/yii2-cms-admin",
+    "type": "yii2-extension",
+    "description": "Admin panel for Yii2 CMS.",
+    "authors": [
+        {
+            "name": "Vitaliy Syrchikov",
+            "email": "maddoger@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "maddoger\\admin\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
