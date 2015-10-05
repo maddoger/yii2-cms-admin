@@ -8,6 +8,7 @@ use yii\helpers\Html;
 AdminAsset::register($this);
 
 $bodyClass = isset($this->params['bodyClass']) ? $this->params['bodyClass'] : '';
+$this->title = (empty($this->title) ? '' : $this->title.' :: ').Yii::$app->name;
 
 $this->beginPage();
 ?>

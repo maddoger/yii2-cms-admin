@@ -55,6 +55,19 @@
     }
   }
 }
+//Panel solid color variantion creator
+.panel-solid-variant(@color; @text-color: #fff) {
+  border: 1px solid @color;
+  > .panel-heading {
+    color: @text-color;
+    background: @color;
+    background-color: @color;
+    a,
+    .btn {
+      color: @text-color;
+    }
+  }
+}
 
 //Direct Chat Variant
 .direct-chat-variant(@bg-color; @color: #fff) {

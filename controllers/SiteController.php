@@ -6,15 +6,8 @@
 
 namespace maddoger\admin\controllers;
 
-use maddoger\admin\models\LoginForm;
-use maddoger\admin\models\PasswordResetRequestForm;
-use maddoger\admin\models\ResetPasswordForm;
-use maddoger\admin\models\SignupForm;
-use maddoger\admin\models\User;
 use maddoger\admin\Module;
-use maddoger\admin\widgets\Alerts;
-use maddoger\core\BackendModule;
-use maddoger\core\models\SystemMessage;
+use maddoger\core\components\BackendModule;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
@@ -58,17 +51,14 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => ['index', 'search'],
-                        'roles' => ['admin.user.dashboard'],
+                        'roles' => ['admin.dashboard'],
                         'allow' => true,
                     ],
-                    /*//For superuser
+                    //For superuser
                     [
-                        'allow' => (
-                            $this->module->superUserId &&
-                            Yii::$app->user->id &&
-                            Yii::$app->user->id == $this->module->superUserId
-                        )
-                    ],*/
+                        'allow' => true,
+                        'roles' => ['superuser'],
+                    ],
                 ],
             ],
         ];
@@ -186,32 +176,6 @@ class SiteController extends Controller
         ]);
     }
 
-
-    /**
-     * @return string
-     */
-    public function actionInstall()
-    {
-        //Check users count
-        if (User::find()->count() > 0) {
-            return $this->redirect(['index']);
-        }
-
-        $this->layout = 'base';
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $user = $model->signup()) {
-
-            //Update roles
-            RoleController::updateRoles(true, $user->id, $this->module->superUserRole);
-
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('signup', [
-                'model' => $model,
-            ]);
-        }
-    }
-
     /**
      * @return string
      */
@@ -239,10 +203,6 @@ class SiteController extends Controller
             $message = $exception->getMessage();
         } else {
             $message = Yii::t('maddoger/admin', 'An internal server error occurred.');
-            if (Module::getInstance()->sendSystemMessageOnServerError) {
-                SystemMessage::send($name . ' ' . Yii::$app->request->url, $exception->getMessage(), 'error',
-                    $exception->getTraceAsString());
-            }
         }
 
         if (Yii::$app->getRequest()->getIsAjax()) {

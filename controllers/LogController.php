@@ -6,21 +6,21 @@
 
 namespace maddoger\admin\controllers;
 
-use maddoger\core\models\SystemMessage;
+use maddoger\admin\models\search\LogSearch;
+use maddoger\core\models\Log;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * SystemMessagesController.php
+ * LogsController.php
  *
  * @author Vitaliy Syrchikov <maddoger@gmail.com>
  * @link http://syrchikov.name
  * @package maddoger/yii2-admin
  */
-class SystemMessagesController extends Controller
+class LogController extends Controller
 {
     /**
      * @inheritdoc
@@ -32,28 +32,15 @@ class SystemMessagesController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
-                        'roles' => ['admin.system-messages.viewList'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['view'],
-                        'roles' => ['admin.system-messages.viewDetail'],
-                        'allow' => true,
-                    ],
-                    [
                         'actions' => ['delete', 'delete-all'],
                         'allow' => true,
-                        'roles' => ['admin.system-messages.delete'],
+                        'roles' => ['admin.log'],
                         'verbs' => ['POST'],
                     ],
                     //For superuser
                     [
-                        'allow' => (
-                            $this->module->superUserId &&
-                            Yii::$app->user->id &&
-                            Yii::$app->user->id == $this->module->superUserId
-                        )
+                        'allow' => true,
+                        'roles' => ['superuser', 'admin.log'],
                     ],
                 ],
             ],
@@ -65,18 +52,17 @@ class SystemMessagesController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => SystemMessage::findLastMessages(0)
-        ]);
-        $dataProvider->sort->defaultOrder = ['created_at' => SORT_DESC];
+        $model = new LogSearch();
+        $dataProvider = $model->search(Yii::$app->request->get());
         return $this->render('index', [
+            'model' => $model,
             'dataProvider' => $dataProvider,
         ]);
     }
 
 
     /**
-     * Displays a single SystemMessage model.
+     * Displays a single Log model.
      * @param string $id
      * @return mixed
      */
@@ -88,7 +74,7 @@ class SystemMessagesController extends Controller
     }
 
     /**
-     * Deletes an existing SystemMessage model.
+     * Deletes an existing Log model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -101,26 +87,26 @@ class SystemMessagesController extends Controller
     }
 
     /**
-     * Deletes all existing SystemMessage models.
+     * Deletes all existing Log models.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionDeleteAll()
     {
-        SystemMessage::deleteAll();
+        Log::deleteAll();
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the SystemMessage model based on its primary key value.
+     * Finds the Log model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return SystemMessage the loaded model
+     * @return Log the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = SystemMessage::findOne($id)) !== null) {
+        if (($model = Log::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('maddoger/admin', 'The requested system message does not exist.'));

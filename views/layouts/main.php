@@ -24,8 +24,6 @@ $this->params['bodyClass'] = 'skin-blue';
 $logo = Yii::$app->name;
 $header = isset($this->params['header']) ? $this->params['header'] : $this->title;
 
-$this->title = (empty($this->title) ? '' : $this->title.' :: ').Yii::$app->name;
-
 $this->beginContent('@maddoger/admin/views/layouts/base.php');
 ?>
     <!-- Site wrapper -->

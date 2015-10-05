@@ -6,6 +6,7 @@
 
 namespace maddoger\admin;
 
+use maddoger\core\behaviors\ConfigurationBehavior;
 use maddoger\core\components\BackendModule;
 use Yii;
 use yii\rbac\Item;
@@ -20,14 +21,14 @@ use yii\rbac\Item;
 class Module extends BackendModule
 {
     /**
-     * @var string URL to logo for admin panel
-     */
-    public $logoUrl;
-
-    /**
      * @var string logo text
      */
     public $logoText;
+
+    /**
+     * @var string URL to logo for admin panel
+     */
+    public $logoImageUrl;
 
     /**
      * @var string
@@ -73,18 +74,6 @@ class Module extends BackendModule
     public $headerNotificationsView = '@maddoger/admin/views/layouts/_headerNotifications.php';
 
     /**
-     * @var string superuser role name.
-     * It will be used as a parent for all RBAC roles loaded from modules.
-     */
-    public $superUserRole = 'superuser';
-
-    /**
-     * @var int superuser id
-     * This user will get all RBAC roles loaded from modules.
-     */
-    public $superUserId;
-
-    /**
      * @var bool
      */
     public $searchUseModulesSources = true;
@@ -101,6 +90,31 @@ class Module extends BackendModule
     {
         parent::init();
 
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'configurationBehavior' => [
+                'class' => ConfigurationBehavior::className(),
+                'attributes' => [
+                    //Default values from main.php configuration
+                    'logoText' => $this->logoText,
+                    'logoImageUrl' => $this->logoImageUrl,
+                    'sortNumber' => $this->sortNumber,
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function registerTranslations()
+    {
         if (!isset(Yii::$app->i18n->translations['maddoger/admin'])) {
 
             Yii::$app->i18n->translations['maddoger/admin'] = [
@@ -124,7 +138,7 @@ class Module extends BackendModule
      */
     public function getVersion()
     {
-        return 'dev';
+        return '1.0.0';
     }
 
     /**
@@ -138,25 +152,11 @@ class Module extends BackendModule
                 'icon' => 'fa fa-gear',
                 'items' => [
                     [
-                        'label' => Yii::t('maddoger/admin', 'Users'),
-                        'url' => ['/' . $this->id . '/user/index'],
-                        'activeUrl' => '/' . $this->id . '/user/*',
-                        'icon' => 'fa fa-user',
-                        'roles' => ['admin.user.view'],
-                    ],
-                    [
-                        'label' => Yii::t('maddoger/admin', 'User roles'),
-                        'url' => ['/' . $this->id . '/role/index'],
-                        'activeUrl' => '/' . $this->id . '/role/*',
-                        'icon' => 'fa fa-users',
-                        'roles' => ['admin.rbac.manageRoles'],
-                    ],
-                    [
-                        'label' => Yii::t('maddoger/admin', 'System messages'),
-                        'url' => ['/' . $this->id . '/system-messages/index'],
-                        'activeUrl' => '/' . $this->id . '/system-messages/*',
+                        'label' => Yii::t('maddoger/admin', 'Log'),
+                        'url' => ['/' . $this->id . '/log/index'],
+                        'activeUrl' => '/' . $this->id . '/log/*',
                         'icon' => 'fa fa-warning',
-                        'roles' => ['admin.system-messages.viewList'],
+                        'roles' => ['admin.log'],
                     ],
                 ]
             ]
@@ -170,91 +170,24 @@ class Module extends BackendModule
     {
         return [
             //Users
-            'admin.user.dashboard' =>
+            'admin.dashboard' =>
                 [
                     'type' => Item::TYPE_PERMISSION,
                     'description' => Yii::t('maddoger/admin', 'Admin. Access to dashboard'),
                 ],
-            'admin.user.profile' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Update own profile'),
-                ],
-            'admin.user.view' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. View admins'),
-                ],
-            'admin.user.create' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Create admins'),
-                ],
-            'admin.user.update' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Update admins'),
-                ],
-            'admin.user.delete' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Delete admins'),
-                ],
-            'admin.user.manager' =>
-                [
-                    'type' => Item::TYPE_ROLE,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Manage admins'),
-                    'children' => [
-                        'admin.user.view',
-                        'admin.user.create',
-                        'admin.user.update',
-                        'admin.user.delete',
-                    ],
-                ],
-            //RBAC
-            'admin.rbac.updateFromModules' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Update user roles from modules'),
-                ],
-            'admin.rbac.manageRoles' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Create, update and delete user roles'),
-                ],
-            'admin.rbac.manager' =>
-                [
-                    'type' => Item::TYPE_ROLE,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Manage user roles'),
-                    'children' => [
-                        'admin.rbac.manageRoles',
-                        'admin.rbac.updateFromModules',
-                    ]
-                ],
             //Admin
-            /*'admin.system-messages.viewList' =>
+            'admin.log' =>
                 [
                     'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. View system messages'),
+                    'description' => Yii::t('maddoger/admin', 'Admin. View log messages'),
                 ],
-            'admin.system-messages.viewDetail' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. View system messages with details'),
-                ],
-            'admin.system-messages.delete' =>
-                [
-                    'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. Delete system messages'),
-                ],*/
             'admin.base' =>
                 [
                     'type' => Item::TYPE_ROLE,
                     'description' => Yii::t('maddoger/admin', 'Admin. Base access to admin panel'),
                     'children' => [
-                        'admin.user.dashboard',
-                        'admin.user.profile',
-                        //'admin.system-messages.viewList',
+                        'admin.dashboard',
+                        'admin.log',
                     ]
                 ],
         ];
@@ -270,34 +203,11 @@ class Module extends BackendModule
                 'class' => '\maddoger\core\search\ArraySearchSource',
                 'data' => [
                     [
-                        'label' => Yii::t('maddoger/admin', 'Users'),
-                        'url' => ['/' . $this->id . '/user/index'],
-                    ],
-                    [
-                        'label' => Yii::t('maddoger/admin', 'User roles'),
-                        'url' => ['/' . $this->id . '/role/index'],
-                    ],
-                ],
-                'roles' => ['admin.user.view', 'admin.rbac.manageRoles'],
-            ],
-            [
-                'class' => '\maddoger\core\search\ArraySearchSource',
-                'data' => [
-                    [
                         'label' => Yii::t('maddoger/admin', 'System messages'),
                         'url' => ['/' . $this->id . '/system-messages/index'],
                     ],
                 ],
                 'roles' => ['admin.system-messages.viewList'],
-            ],
-            [
-                'class' => '\maddoger\core\search\ActiveSearchSource',
-                'modelClass' => '\maddoger\admin\models\User',
-                'searchAttributes' => ['username', 'email', 'real_name'],
-                'url' => ['/' . $this->id . '/user/view', 'id' => null],
-                'label' => 'username',
-                'labelPrefix' => Yii::t('maddoger/admin', 'User - '),
-                'roles' => ['admin.user.view'],
             ],
         ];
     }
