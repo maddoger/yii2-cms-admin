@@ -13,8 +13,8 @@ class AdminAsset extends AssetBundle
         //'css/skins/_all-skins.min.css',
     ];
     public $js = [
+        'js/adminlte.js',
         'js/app.js',
-        'js/demo.js',
     ];
     public $depends = [
         'maddoger\admin\assets\FontAwesomeAsset',

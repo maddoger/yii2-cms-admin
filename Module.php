@@ -74,6 +74,11 @@ class Module extends BackendModule
     public $headerNotificationsView = '@maddoger/admin/views/layouts/_headerNotifications.php';
 
     /**
+     * @var string
+     */
+    public $footerView = '@maddoger/admin/views/layouts/_footer.php';
+
+    /**
      * @var bool
      */
     public $searchUseModulesSources = true;

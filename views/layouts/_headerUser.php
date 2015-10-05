@@ -14,7 +14,7 @@ use yii\helpers\Url;
 $adminModule = Module::getInstance();
 
 /**
- * @var \maddoger\admin\models\User $user
+ * @var \maddoger\user\common\models\User $user
  */
 $user = Yii::$app->user->getIdentity()
 ?>
@@ -35,10 +35,10 @@ $user = Yii::$app->user->getIdentity()
         <!-- Menu Footer-->
         <li class="user-footer">
             <div class="pull-left">
-                <a href="<?= Url::to(['/'.$adminModule->id.'/user/profile']) ?>" class="btn btn-default btn-flat"><?= Yii::t('maddoger/admin', 'Profile') ?></a>
+                <a href="<?= Url::to(['/user/user/profile']) ?>" class="btn btn-default btn-flat"><?= Yii::t('maddoger/admin', 'Profile') ?></a>
             </div>
             <div class="pull-right">
-                <a href="<?= Url::to(['/'.$adminModule->id.'/site/logout']) ?>" class="btn btn-default btn-flat"><?= Yii::t('maddoger/admin', 'Sign out') ?></a>
+                <a href="<?= Url::to(['/user/auth/logout']) ?>" class="btn btn-default btn-flat"><?= Yii::t('maddoger/admin', 'Sign out') ?></a>
             </div>
         </li>
     </ul>

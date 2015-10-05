@@ -35,11 +35,12 @@ $params = [
 ];
 $jsonParams = Json::encode(ArrayHelper::merge($params, $widget->clientOptions));
 
-$this->registerJs(
+//TODO: Rewrite
+/*$this->registerJs(
     <<<JS
         $('#query-field-{$widget->id}').autocomplete({$jsonParams});
 JS
-);
+);*/
 
 ?>
 <div class="input-group">

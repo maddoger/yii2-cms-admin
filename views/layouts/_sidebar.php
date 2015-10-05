@@ -26,9 +26,7 @@ $adminModule = Module::getInstance();
                 ['class' => 'img-circle', 'alt' => Yii::t('maddoger/admin', 'Avatar')]) : '' ?>
         </div>
         <div class="pull-left info">
-            <p><?= $user ? Yii::t('maddoger/admin', 'Hello {username}', ['username' => Html::encode($user->getName())]) : '' ?></p>
-
-            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            <p><?= $user ? Yii::t('maddoger/admin', 'Hello<br />{username}', ['username' => Html::encode($user->getName())]) : '' ?></p>
         </div>
     </div>
 

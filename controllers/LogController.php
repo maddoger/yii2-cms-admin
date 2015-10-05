@@ -10,6 +10,7 @@ use maddoger\admin\models\search\LogSearch;
 use maddoger\core\models\Log;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -42,6 +43,13 @@ class LogController extends Controller
                         'allow' => true,
                         'roles' => ['superuser', 'admin.log'],
                     ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post', 'delete'],
+                    'delete-all' => ['post', 'delete'],
                 ],
             ],
         ];
