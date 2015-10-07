@@ -2,6 +2,7 @@
 
 namespace maddoger\admin\widgets;
 
+use Closure;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -75,6 +76,10 @@ class Menu extends BaseMenu
             if (!isset($item['label'])) {
                 $item['label'] = '';
             }
+            if ($item['label'] instanceof Closure) {
+                $item['label'] = call_user_func($item['label'], $item);
+            }
+
             if (!isset($items[$i]['options'])) {
                 $items[$i]['options'] = [];
             }

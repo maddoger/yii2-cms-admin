@@ -1,0 +1,48 @@
+.tabs-left {
+  margin-bottom: 20px;
+  background: #fff;
+  box-shadow: @box-boxshadow;
+  border-radius: @box-border-radius;
+  //margin: 0 -10px;
+  .clearfix();
+
+  > .tab-content {
+    padding: 10px;
+  }
+
+  @media (min-width: @screen-md-min) {
+    > .nav-tabs {
+      float: left;
+      width: 20%;
+      padding: 10px;
+      border: none;
+
+      > li {
+        float: none;
+        & > a {
+          border: none;
+          border-radius: 0;
+          padding-left: 13px;
+        }
+
+        + li {
+          margin-top: 2px;
+          margin-left: 0; // no need for this gap between nav items
+        }
+
+        &.active {
+          & > a {
+            border: none;
+            padding-left: 10px;
+            border-left: 3px solid @light-blue;
+            color: @text-color;
+          }
+        }
+      }
+    }
+    > .tab-content {
+      float: left;
+      width: 80%;
+    }
+  }
+}

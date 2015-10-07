@@ -7,7 +7,6 @@
 use maddoger\admin\Module;
 use maddoger\admin\widgets\Alerts;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 
 $this->params['bodyClass'] = 'skin-blue';
@@ -17,14 +16,12 @@ $this->params['bodyClass'] = 'skin-blue';
  */
 $adminModule = Module::getInstance();
 
+//Logo text
 $logo = $adminModule->logoText ?: Yii::$app->name;
-if ($adminModule->logoImageUrl) {
-    $logo = Html::img($adminModule->logoImageUrl, ['alt' => $logo, 'class' => 'icon']);
-} else {
 
+if ($adminModule->logoImageUrl) {
+    $logo = Html::img($adminModule->logoImageUrl, ['alt' => $logo, 'class' => 'img-responsive']);
 }
-$logo = Yii::$app->name;
-$header = isset($this->params['header']) ? $this->params['header'] : $this->title;
 
 $this->beginContent('@maddoger/admin/views/layouts/base.php');
 ?>
@@ -33,7 +30,9 @@ $this->beginContent('@maddoger/admin/views/layouts/base.php');
 
         <header class="main-header">
             <!-- Logo -->
-            <?= Html::a($logo, Yii::$app->getHomeUrl(), ['class' => 'logo']) ?>
+            <a href="<?= Yii::$app->getHomeUrl() ?>" class="logo">
+                <?= $logo ?>
+            </a>
 
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -44,6 +43,7 @@ $this->beginContent('@maddoger/admin/views/layouts/base.php');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
+
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <?= $this->render($adminModule->headerNotificationsView); ?>
@@ -70,10 +70,14 @@ $this->beginContent('@maddoger/admin/views/layouts/base.php');
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1><?= $this->title ?></h1>
-                <?= Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ]); ?>
+                <?php if (isset($this->blocks['header'])): ?>
+                    <?= $this->blocks['header'] ?>
+                <?php else: ?>
+                    <h1><?= $this->title ?></h1>
+                    <?= Breadcrumbs::widget([
+                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    ]); ?>
+                <?php endif; ?>
             </section>
 
             <!-- Main content -->
@@ -82,7 +86,8 @@ $this->beginContent('@maddoger/admin/views/layouts/base.php');
                 <?= $content ?>
             </section>
 
-        </div><!-- /.content-wrapper -->
+        </div>
+        <!-- /.content-wrapper -->
 
         <footer class="main-footer">
             <?= $this->render($adminModule->footerView); ?>

@@ -8,6 +8,7 @@ namespace maddoger\admin;
 
 use maddoger\core\behaviors\ConfigurationBehavior;
 use maddoger\core\components\BackendModule;
+use maddoger\core\models\DynamicModel;
 use Yii;
 use yii\rbac\Item;
 
@@ -94,7 +95,6 @@ class Module extends BackendModule
     public function init()
     {
         parent::init();
-
     }
 
     /**
@@ -149,6 +149,31 @@ class Module extends BackendModule
     /**
      * @inheritdoc
      */
+    public function getConfigurationModel()
+    {
+        /** @var DynamicModel $model */
+        $model = parent::getConfigurationModel();
+
+        $model->defineAttribute('logoText', $this->logoText);
+        $model->defineAttribute('logoImageUrl', $this->logoImageUrl);
+
+        $model->addRule(['logoText', 'logoImageUrl'], 'string');
+        $model->addRule(['logoText', 'logoImageUrl', 'sortNumber'], 'default', ['value' => null]);
+
+        return $model;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function saveConfigurationModel($model)
+    {
+        return $this->saveConfiguration($model->getAttributes());
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getNavigation()
     {
         return [
@@ -156,6 +181,20 @@ class Module extends BackendModule
                 'label' => Yii::t('maddoger/admin', 'Admin panel'),
                 'icon' => 'fa fa-gear',
                 'items' => [
+                    [
+                        'label' => Yii::t('maddoger/admin', 'Configuration'),
+                        'url' => ['/' . $this->id . '/configuration/index'],
+                        'activeUrl' => '/' . $this->id . '/configuration/*',
+                        'icon' => 'fa fa-gears',
+                        'roles' => ['admin.configuration'],
+                    ],
+                    [
+                        'label' => Yii::t('maddoger/admin', 'System status'),
+                        'url' => ['/' . $this->id . '/system-status/index'],
+                        'activeUrl' => '/' . $this->id . '/system-status/*',
+                        'icon' => 'fa fa-bars',
+                        'roles' => ['admin.system-status'],
+                    ],
                     [
                         'label' => Yii::t('maddoger/admin', 'Log'),
                         'url' => ['/' . $this->id . '/log/index'],
@@ -174,17 +213,25 @@ class Module extends BackendModule
     public function getRbacItems()
     {
         return [
-            //Users
             'admin.dashboard' =>
                 [
                     'type' => Item::TYPE_PERMISSION,
                     'description' => Yii::t('maddoger/admin', 'Admin. Access to dashboard'),
                 ],
-            //Admin
             'admin.log' =>
                 [
                     'type' => Item::TYPE_PERMISSION,
                     'description' => Yii::t('maddoger/admin', 'Admin. View log messages'),
+                ],
+            'admin.configuration' =>
+                [
+                    'type' => Item::TYPE_PERMISSION,
+                    'description' => Yii::t('maddoger/admin', 'Admin. Configuring modules'),
+                ],
+            'admin.system-status' =>
+                [
+                    'type' => Item::TYPE_PERMISSION,
+                    'description' => Yii::t('maddoger/admin', 'Admin. System status'),
                 ],
             'admin.base' =>
                 [
@@ -193,6 +240,8 @@ class Module extends BackendModule
                     'children' => [
                         'admin.dashboard',
                         'admin.log',
+                        'admin.configuration',
+                        'admin.system-status',
                     ]
                 ],
         ];
