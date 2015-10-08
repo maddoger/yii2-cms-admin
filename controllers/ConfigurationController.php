@@ -33,6 +33,29 @@ class ConfigurationController extends Controller
         ];
     }
 
+    private function checkAccess($roles)
+    {
+        $user = Yii::$app->getUser();
+        if (empty($roles)) {
+            return true;
+        }
+        foreach ($roles as $role) {
+            if ($role === '?') {
+                if ($user->getIsGuest()) {
+                    return true;
+                }
+            } elseif ($role === '@') {
+                if (!$user->getIsGuest()) {
+                    return true;
+                }
+            } elseif ($user->can($role)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function actionIndex()
     {
         $configuration = [];
@@ -45,14 +68,23 @@ class ConfigurationController extends Controller
                 $module = Yii::$app->getModule($moduleId, true);
             }
 
-            if ($module instanceof BackendModule) {
+            //ConfigurationBehavior
+            //TODO: Do better ConfigurationBehavior test
+            if ($module instanceof BackendModule &&
+                $module->hasMethod('getConfigurationModel') &&
+                $module->hasMethod('getConfigurationView') &&
+                $module->hasMethod('getConfigurationRoles') &&
+                $module->hasMethod('saveConfigurationModel')
+            ) {
 
                 $sort = $module->sortNumber ?: (++$sortIndex) * 100;
 
+                $roles = $module->getConfigurationRoles();
+                if ($roles && !$this->checkAccess($roles)) {
+                    continue;
+                }
                 $model = $module->getConfigurationModel();
                 $view = $module->getConfigurationView();
-
-                //TODO RBAC
 
                 if ($model && $view) {
 

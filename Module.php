@@ -106,12 +106,22 @@ class Module extends BackendModule
             'configurationBehavior' => [
                 'class' => ConfigurationBehavior::className(),
                 'attributes' => [
-                    //Default values from main.php configuration
                     'logoText' => $this->logoText,
                     'logoImageUrl' => $this->logoImageUrl,
                     'sortNumber' => $this->sortNumber,
                 ],
-            ]
+                'saveToOwnerProperties' => true,
+                //Editing
+                'view' => $this->getViewPath() . DIRECTORY_SEPARATOR . 'configuration.php',
+                'roles' => ['admin.configuration'],
+                'dynamicModel' => [
+                    'formName' => $this->id.'Configuration',
+                    'rules' => [
+                        [['logoText', 'logoImageUrl'], 'string'],
+                        [['logoText', 'logoImageUrl', 'sortNumber'], 'default', ['value' => null]],
+                    ],
+                ]
+            ],
         ];
     }
 
@@ -144,31 +154,6 @@ class Module extends BackendModule
     public function getVersion()
     {
         return '1.0.0';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getConfigurationModel()
-    {
-        /** @var DynamicModel $model */
-        $model = parent::getConfigurationModel();
-
-        $model->defineAttribute('logoText', $this->logoText);
-        $model->defineAttribute('logoImageUrl', $this->logoImageUrl);
-
-        $model->addRule(['logoText', 'logoImageUrl'], 'string');
-        $model->addRule(['logoText', 'logoImageUrl', 'sortNumber'], 'default', ['value' => null]);
-
-        return $model;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function saveConfigurationModel($model)
-    {
-        return $this->saveConfiguration($model->getAttributes());
     }
 
     /**
