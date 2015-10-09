@@ -30,4 +30,9 @@ class SystemInformationController extends Controller
 
         return $this->render('index');
     }
+
+    public function actionPhpinfo()
+    {
+        return $this->renderPartial('phpinfo');
+    }
 }
