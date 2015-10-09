@@ -13,6 +13,7 @@
         "yiisoft/yii2-bootstrap": "*",
         "maddoger/yii2-select2": "*",
         "maddoger/yii2-cms-core": "*",
+        "maddoger/yii2-highcharts": "*",
         "bower-asset/font-awesome": "4.*"
     },
     "autoload": {

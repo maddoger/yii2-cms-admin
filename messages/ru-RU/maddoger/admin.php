@@ -19,7 +19,7 @@
 return [
     '200x50. This image will be displayed in place of the logo of the admin panel.' => '200x50. Это изображение будет отображено на месте логотипа в панели администратора.',
     'Admin. Configuring modules' => 'Администратор. Настройка модулей',
-    'Admin. System status' => 'Администратор. Статус системы',
+    'Admin. System information' => 'Администратор. Информация о системе',
     'Configuration' => 'Конфигурация',
     'Failed to save.' => 'Ошибка сохранения.',
     'Logo image url' => 'URL картинки логотипа',
@@ -28,7 +28,7 @@ return [
     'Settings saved successfully.' => 'Настройки успешно сохранены.',
     'Some settings have problems.' => 'Некоторые параметры имеют проблемы.',
     'Sort number' => 'Число для сортировки.',
-    'System status' => 'Статус системы',
+    'System status' => 'Информация о системе',
     'The lower the number, the higher the menu item.' => 'Чем меньше число, тем выше пункт в меню.',
     'This text will be displayed in place of the logo of the admin panel.' => 'Этот текст будет отображен на месте логотипа в панели администратора.',
     'Admin Panel Module' => 'Модуль панели администратора',

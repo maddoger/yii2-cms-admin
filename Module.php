@@ -174,11 +174,11 @@ class Module extends BackendModule
                         'roles' => ['admin.configuration'],
                     ],
                     [
-                        'label' => Yii::t('maddoger/admin', 'System status'),
-                        'url' => ['/' . $this->id . '/system-status/index'],
-                        'activeUrl' => '/' . $this->id . '/system-status/*',
+                        'label' => Yii::t('maddoger/admin', 'System information'),
+                        'url' => ['/' . $this->id . '/system-information/index'],
+                        'activeUrl' => '/' . $this->id . '/system-information/*',
                         'icon' => 'fa fa-bars',
-                        'roles' => ['admin.system-status'],
+                        'roles' => ['admin.system-information'],
                     ],
                     [
                         'label' => Yii::t('maddoger/admin', 'Log'),
@@ -213,10 +213,10 @@ class Module extends BackendModule
                     'type' => Item::TYPE_PERMISSION,
                     'description' => Yii::t('maddoger/admin', 'Admin. Configuring modules'),
                 ],
-            'admin.system-status' =>
+            'admin.system-information' =>
                 [
                     'type' => Item::TYPE_PERMISSION,
-                    'description' => Yii::t('maddoger/admin', 'Admin. System status'),
+                    'description' => Yii::t('maddoger/admin', 'Admin. System information'),
                 ],
             'admin.base' =>
                 [
@@ -226,7 +226,7 @@ class Module extends BackendModule
                         'admin.dashboard',
                         'admin.log',
                         'admin.configuration',
-                        'admin.system-status',
+                        'admin.system-information',
                     ]
                 ],
         ];
