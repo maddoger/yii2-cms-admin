@@ -14,7 +14,8 @@
         "maddoger/yii2-select2": "*",
         "maddoger/yii2-cms-core": "*",
         "maddoger/yii2-highcharts": "*",
-        "bower-asset/font-awesome": "4.*"
+        "bower-asset/font-awesome": "4.*",
+        "phpsysinfo/phpsysinfo": "~3.2"
     },
     "autoload": {
         "psr-4": {
