@@ -5,6 +5,7 @@
  * @var string $query
  * @var \maddoger\admin\widgets\SearchForm $widget
  */
+use maddoger\admin\assets\AutocompleteAsset;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -35,16 +36,16 @@ $params = [
 ];
 $jsonParams = Json::encode(ArrayHelper::merge($params, $widget->clientOptions));
 
-//TODO: Rewrite
-/*$this->registerJs(
+AutocompleteAsset::register($this);
+$this->registerJs(
     <<<JS
-        $('#query-field-{$widget->id}').autocomplete({$jsonParams});
+        jQuery('#query-field-{$widget->id}').autocomplete({$jsonParams});
 JS
-);*/
+);
 
 ?>
 <div class="input-group">
-    <?= Html::textInput($widget->queryParam, $query, [
+    <?php echo Html::textInput($widget->queryParam, $query, [
         'id' => 'query-field-' . $widget->id,
         'class' => 'form-control',
         'placeholder' => Yii::t('maddoger/admin', 'Search...'),

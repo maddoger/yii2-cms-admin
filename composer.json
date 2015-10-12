@@ -11,11 +11,11 @@
     "require": {
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
-        "maddoger/yii2-selectize": "*",
         "maddoger/yii2-cms-core": "*",
         "maddoger/yii2-highcharts": "*",
+        "phpsysinfo/phpsysinfo": "~3.2",
         "bower-asset/font-awesome": "4.*",
-        "phpsysinfo/phpsysinfo": "~3.2"
+        "bower-asset/devbridge-autocomplete": "~1.2"
     },
     "autoload": {
         "psr-4": {
