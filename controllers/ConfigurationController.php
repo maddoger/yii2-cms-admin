@@ -70,14 +70,14 @@ class ConfigurationController extends Controller
 
             //ConfigurationBehavior
             //TODO: Do better ConfigurationBehavior test
-            if ($module instanceof BackendModule &&
+            if (
                 $module->hasMethod('getConfigurationModel') &&
                 $module->hasMethod('getConfigurationView') &&
                 $module->hasMethod('getConfigurationRoles') &&
                 $module->hasMethod('saveConfigurationModel')
             ) {
 
-                $sort = $module->sortNumber ?: (++$sortIndex) * 100;
+                $sort = (isset($module->sortNumber) && $module->sortNumber) ?: (++$sortIndex) * 100;
 
                 $roles = $module->getConfigurationRoles();
                 if ($roles && !$this->checkAccess($roles)) {
@@ -87,14 +87,11 @@ class ConfigurationController extends Controller
                 $view = $module->getConfigurationView();
 
                 if ($model && $view) {
-
-                    $model->formName();
-
                     $configuration[$moduleId] = [
                         'sort' => $sort,
                         'module' => $module,
                         'moduleId' => $moduleId,
-                        'moduleName' => $module->getName(),
+                        'moduleName' => $module->hasMethod('getName') ? $module->getName() : $moduleId,
                         'model' => $model,
                         'view' => $view,
                     ];

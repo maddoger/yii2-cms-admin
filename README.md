@@ -33,8 +33,7 @@ to the require section of your `composer.json` file.
 'modules' => [
     ...
     'admin' => [
-            'class' => 'maddoger\admin\AdminModule',
-            'superUserId' => 1,
+            'class' => 'maddoger\admin\Module',
         ],
     ],
     ...
@@ -54,29 +53,12 @@ to the require section of your `composer.json` file.
     'urlManager' => [
         'rules' => [
             //Admin
-            '<action:(index|login|logout|captcha|request-password-reset|reset-password|search)>' => 'admin/site/<action>',
+            <action:(index|captcha|search)>' => 'admin/site/<action>',
+            '<controller:(log|system-information|configuration)>/<action:(index|captcha|search)>' => 'admin/<controller>/<action>',
         ]
     ],
-    'mailer' => [
-        'class' => 'yii\swiftmailer\Mailer',
-        'viewPath' => '@maddoger/admin/mail',
-        // send all mails to a file by default. You have to set
-        // 'useFileTransport' to false and configure a transport
-        // for the mailer to send real emails.
-        'useFileTransport' => true,
-    ],
-
-    //User
-    'user' => [
-        'identityClass' => 'maddoger\admin\models\User',
-        'loginUrl' => ['admin/site/login'],
-        'enableAutoLogin' => true,
-        'on afterLogin'   => ['maddoger\admin\models\User', 'updateLastVisit'],
-        'on afterLogout'   => ['maddoger\admin\models\User', 'updateLastVisit'],
-    ],
-    'session' => [
-        'class' => 'yii\web\DbSession',
-        'sessionTable' => 'admin_session',
+    'errorHandler' => [
+        'errorAction' => 'admin/site/error',
     ],
 ...
 ]

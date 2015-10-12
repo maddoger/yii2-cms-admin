@@ -14,9 +14,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="system-messages-view">
-
     <div class="panel panel-info">
         <div class="panel-body">
+            <p class="pull-right">
+                <?= Html::a(Yii::t('maddoger/admin', 'Back'), Yii::$app->request->referrer?:['log'], [
+                    'class' => 'btn btn-info',
+                ]) ?>
+                &nbsp;&nbsp;
+                <?= Html::a(Yii::t('maddoger/admin', 'Delete'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => Yii::t('maddoger/admin', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ]
+                ]) ?>
+            </p>
             <dl class="dl-horizontal">
                 <dt><?= Yii::t('maddoger/admin', 'Created at') ?></dt>
                 <dd><?= Yii::$app->formatter->asDatetime($model->log_time, 'long') ?></dd>
@@ -29,13 +41,4 @@ $this->params['breadcrumbs'][] = $this->title;
             </dl>
         </div>
     </div>
-    <p class="pull-right">
-        <?= Html::a(Yii::t('maddoger/admin', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('maddoger/admin', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ]
-        ]) ?>
-    </p>
 </div>

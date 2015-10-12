@@ -50,8 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'level',
-                        'value' => function ($data) {
-                            return Logger::getLevelName($data['level']);
+                        'value' => function ($model) {
+                            return $model->getLevelName();
                         },
                         'filter' => [
                             Logger::LEVEL_TRACE => ' Trace ',
@@ -70,11 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'category',
                     [
                         'attribute' => 'message',
-                        'value' => function ($data) {
-                            return Html::encode(
-                                stristr($data['message'], 'Stack trace', true) ?:
-                                    substr($data['message'], 0, 200)
-                            );
+                        'value' => function ($model) {
+                            return Html::a(Html::encode($model->getTitle()),
+                                ['view', 'id' => $model->id],
+                                ['title' => Yii::t('maddoger/admin', 'More info'),'class' => 'text-color']);
                         },
                         'format' => 'html',
                         'options' => [

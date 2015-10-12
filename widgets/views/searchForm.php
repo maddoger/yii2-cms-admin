@@ -16,6 +16,7 @@ $actionUrl = Url::to($widget->actionUrl);
 echo Html::beginForm($actionUrl, 'get', $widget->options);
 
 $params = [
+    'appendTo' => '#'.$widget->options['id'],
     'minChars' => 2,
     'serviceUrl' => "{$actionUrl}",
     'dataType' => 'json',
@@ -39,14 +40,14 @@ $jsonParams = Json::encode(ArrayHelper::merge($params, $widget->clientOptions));
 AutocompleteAsset::register($this);
 $this->registerJs(
     <<<JS
-        jQuery('#query-field-{$widget->id}').autocomplete({$jsonParams});
+        jQuery('#query-field-{$widget->options['id']}').autocomplete({$jsonParams});
 JS
 );
 
 ?>
 <div class="input-group">
     <?php echo Html::textInput($widget->queryParam, $query, [
-        'id' => 'query-field-' . $widget->id,
+        'id' => 'query-field-' . $widget->options['id'],
         'class' => 'form-control',
         'placeholder' => Yii::t('maddoger/admin', 'Search...'),
         'autocomplete' => 'off',

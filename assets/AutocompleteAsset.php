@@ -11,4 +11,8 @@ class AutocompleteAsset extends AssetBundle
     public $js = [
         'jquery.autocomplete.min.js',
     ];
+
+    public $depends = [
+        'yii\web\JqueryAsset',
+    ];
 }

@@ -8,6 +8,7 @@ namespace maddoger\admin\controllers;
 
 use maddoger\admin\Module;
 use maddoger\core\components\BackendModule;
+use maddoger\core\models\Log;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
@@ -102,7 +103,11 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $view = Module::getInstance()->dashboardView ?: 'dashboard';
-        return $this->render($view);
+
+        return $this->render($view, [
+            'menu' => Module::getInstance()->getSidebarMenu(),
+            'messages' => Yii::$app->user->can('admin.log') ? Log::findLastMessages()->limit(10)->all() : false,
+        ]);
     }
 
     /**

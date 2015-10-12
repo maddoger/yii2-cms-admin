@@ -49,6 +49,9 @@ class SearchForm extends Widget
     public function init()
     {
         parent::init();
+        if (!isset($this->options['id'])) {
+            $this->options['id'] = $this->getId();
+        }
         if (!$this->actionUrl) {
             $this->actionUrl = ['/'.Module::getInstance()->id.'/site/search'];
         }
