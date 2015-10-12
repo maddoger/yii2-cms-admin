@@ -242,11 +242,19 @@ class Module extends BackendModule
                 'class' => '\maddoger\core\search\ArraySearchSource',
                 'data' => [
                     [
-                        'label' => Yii::t('maddoger/admin', 'System messages'),
-                        'url' => ['/' . $this->id . '/system-messages/index'],
+                        'label' => Yii::t('maddoger/admin', 'Configuration'),
+                        'url' => ['/' . $this->id . '/configuration/index'],
+                    ],
+                    [
+                        'label' => Yii::t('maddoger/admin', 'System information'),
+                        'url' => ['/' . $this->id . '/system-information/index'],
+                    ],
+                    [
+                        'label' => Yii::t('maddoger/admin', 'Log'),
+                        'url' => ['/' . $this->id . '/log/index'],
                     ],
                 ],
-                'roles' => ['admin.system-messages.viewList'],
+                'roles' => ['admin.base'],
             ],
         ];
     }

@@ -308,7 +308,7 @@ $this->registerJs(
 
     function requestSystemInfo()
     {
-        $.getJSON('{$jsonUrl}', function(data){
+        $.getJSON('{$jsonUrl}?'+Math.random(), function(data){
 
             cpuSmallBoxPercent.text(data['loadPercent']+'%');
             setSmallBoxClassByPercent(cpuSmallBox, data['loadPercent']);

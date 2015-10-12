@@ -106,9 +106,11 @@ class SiteController extends Controller
     }
 
     /**
+     * @param string $q
      * @return string
+     * @throws \yii\base\InvalidConfigException
      */
-    public function actionSearch($q)
+    public function actionSearch($q = '')
     {
         $q = trim(strip_tags($q));
 
