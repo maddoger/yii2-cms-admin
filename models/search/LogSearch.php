@@ -2,7 +2,7 @@
 
 namespace maddoger\admin\models\search;
 
-use maddoger\core\models\Log;
+use maddoger\admin\models\Log;
 use yii\data\ActiveDataProvider;
 
 class LogSearch extends Log

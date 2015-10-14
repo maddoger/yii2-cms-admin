@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Back' => 'Назад',
+    'ID' => 'ID',
+    'Version' => 'Версия',
     '200x50. This image will be displayed in place of the logo of the admin panel.' => '200x50. Это изображение будет отображено на месте логотипа в панели администратора.',
     'Admin Panel Module' => 'Модуль панели администратора',
     'Admin panel' => 'Панель администратора',
@@ -31,8 +32,11 @@ return [
     'Are you sure you want to delete all items?' => 'Вы уверены, что хотите удалить все элементы?',
     'Are you sure you want to delete this item?' => 'Вы уверены, что хотите удалить эту запись?',
     'Avatar' => 'Аватар',
+    'Back' => 'Назад',
     'CPU Usage' => 'Использование ЦПУ',
+    'Category' => 'Категория',
     'Configuration' => 'Конфигурация',
+    'Copyright &copy; {years}, {company}. All rights reserved.' => '&copy; {years}, {company}. Все права защищены.',
     'Created at' => 'Создан в',
     'DB' => 'БД',
     'Dashboard' => 'Главная',
@@ -50,6 +54,7 @@ return [
     'Last week' => 'За неделю',
     'Level' => 'Уровень',
     'Log' => 'Журнал',
+    'Log Time' => 'Время',
     'Logo image url' => 'URL картинки логотипа',
     'Logo text' => 'Текст логотипа',
     'Member since {0, date, MMM. yyyy}' => 'Участник с {0, date, MMMM yyyy}',

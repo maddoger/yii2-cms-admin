@@ -2,10 +2,9 @@
 
 /* @var yii\web\View $this */
 /* @var yii\data\ActiveDataProvider $dataProvider */
-/* @var maddoger\core\models\Log $model */
+/* @var maddoger\admin\models\Log $model */
 
 use yii\helpers\Html;
-use yii\helpers\VarDumper;
 
 $this->title = Yii::t('maddoger/admin', 'System message #{id}', ['id' => $model->id]);
 
@@ -17,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="panel panel-info">
         <div class="panel-body">
             <p class="pull-right">
-                <?= Html::a(Yii::t('maddoger/admin', 'Back'), Yii::$app->request->referrer?:['log'], [
+                <?= Html::a(Yii::t('maddoger/admin', 'Back'), Yii::$app->request->referrer ?: ['log'], [
                     'class' => 'btn btn-info',
                 ]) ?>
                 &nbsp;&nbsp;
@@ -37,7 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <dt><?= Yii::t('maddoger/admin', 'Level') ?></dt>
                 <dd><?= Yii::$app->getLog()->getLogger()->getLevelName($model->level) ?></dd>
                 <dt><?= Yii::t('maddoger/admin', 'Message') ?></dt>
-                <dd><pre><?= Html::encode($model->message) ?></pre></dd>
+                <dd>
+                    <pre><?= Html::encode($model->message) ?></pre>
+                </dd>
             </dl>
         </div>
     </div>

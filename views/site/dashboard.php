@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /** @var $menu array */
-/** @var $messages \maddoger\core\models\Log[] */
+/** @var $messages \maddoger\admin\models\Log[] */
 
 use maddoger\admin\Module;
 use maddoger\admin\widgets\Menu;

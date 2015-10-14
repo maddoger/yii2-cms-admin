@@ -7,7 +7,7 @@
 namespace maddoger\admin\controllers;
 
 use maddoger\admin\models\search\LogSearch;
-use maddoger\core\models\Log;
+use maddoger\admin\models\Log;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
