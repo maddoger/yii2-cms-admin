@@ -17,16 +17,28 @@ $adminModule = Module::getInstance();
     <div class="user-panel">
         <?php
         /**
-         * @var \maddoger\admin\models\User $user
+         * @var \maddoger\user\common\models\User $user
          */
         $user = Yii::$app->user->getIdentity();
+
+        if ($user && isset($user->avatar) && !empty($user->avatar)) {
+            echo Html::tag(
+                'div',
+                Html::a(Html::img($user->avatar,
+                    ['class' => 'img-circle', 'alt' => Yii::t('maddoger/admin', 'Avatar')]),
+                ['/user/user/profile']),
+                ['class' => 'pull-left image']
+                );
+        }
         ?>
-        <div class="pull-left image">
-            <?= $user && isset($user->avatar) && !empty($user->avatar) ? Html::img($user->avatar,
-                ['class' => 'img-circle', 'alt' => Yii::t('maddoger/admin', 'Avatar')]) : '' ?>
-        </div>
         <div class="pull-left info">
-            <p><?= $user ? Yii::t('maddoger/admin', 'Hello<br />{username}', ['username' => Html::encode($user->getName())]) : '' ?></p>
+            <?php
+            if ($user) {
+                echo Html::a(
+                    Yii::t('maddoger/admin', 'Hello<br />{username}', ['username' => Html::encode($user->getName())]),
+                    ['/user/user/profile']);
+            }
+            ?>
         </div>
     </div>
 
