@@ -29,7 +29,11 @@ $user = Yii::$app->user->getIdentity()
             <?= $user->avatar ? Html::img($user->avatar, ['class' => 'img-circle', 'alt' => Yii::t('maddoger/admin', 'Avatar')]) : '' ?>
             <p>
                 <?= Html::encode($user->getName()) ?>
-                <small><?= Yii::t('maddoger/admin', 'Member since {0, date, MMM. yyyy}', $user->created_at) ?></small>
+                <?php
+                if ($user && $user->created_at) {
+                    echo Html::tag('small', Yii::t('maddoger/admin', 'Member since {0, date, MMM. yyyy}', $user->created_at));
+                }
+                ?>
             </p>
         </li>
         <!-- Menu Footer-->

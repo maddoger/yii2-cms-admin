@@ -8,7 +8,6 @@ namespace maddoger\admin;
 
 use maddoger\core\behaviors\ConfigurationBehavior;
 use maddoger\core\components\BackendModule;
-use maddoger\core\models\DynamicModel;
 use Yii;
 use yii\rbac\Item;
 
@@ -115,7 +114,7 @@ class Module extends BackendModule
                 'view' => $this->getViewPath() . DIRECTORY_SEPARATOR . 'configuration.php',
                 'roles' => ['admin.configuration'],
                 'dynamicModel' => [
-                    'formName' => $this->id.'Configuration',
+                    'formName' => $this->id . 'Configuration',
                     'rules' => [
                         [['logoText', 'logoImageUrl'], 'string'],
                         [['logoText', 'logoImageUrl', 'sortNumber'], 'default', ['value' => null]],
@@ -266,7 +265,7 @@ class Module extends BackendModule
     {
         $menu = null;
 
-        $cacheKey = 'ADMIN_SIDEBAR_MENU';
+        $cacheKey = 'ADMIN_SIDEBAR_MENU' . Yii::$app->language;
         if ($this->sidebarMenuCache !== false) {
             $menu = Yii::$app->cache->get($cacheKey);
         } else {
