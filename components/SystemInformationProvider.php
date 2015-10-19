@@ -87,7 +87,7 @@ class SystemInformationProvider extends Component
      */
     public function getMemoryUsage()
     {
-        return $this->_sys->getMemUsed();
+        return $this->_sys->getMemApplication();
     }
 
     /**
@@ -103,7 +103,7 @@ class SystemInformationProvider extends Component
      */
     public function getMemoryFree()
     {
-        return $this->getMemoryTotal()-$this->getMemoryUsage();
+        return $this->_sys->getMemFree();
     }
 
     /**

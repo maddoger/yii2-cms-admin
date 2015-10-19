@@ -89,14 +89,6 @@ class Module extends BackendModule
     public $searchSources;
 
     /**
-     * Init module
-     */
-    public function init()
-    {
-        parent::init();
-    }
-
-    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -158,7 +150,7 @@ class Module extends BackendModule
     /**
      * @inheritdoc
      */
-    public function getNavigation()
+    public function getDefaultNavigation()
     {
         return [
             [
@@ -295,8 +287,7 @@ class Module extends BackendModule
                         $module = Yii::$app->getModule($moduleId, true);
                     }
 
-                    if ($module instanceof BackendModule) {
-
+                    if ($module instanceof BackendModule && $module->showNavigation) {
 
                         $sort = $module->sortNumber ?: (++$sortIndex) * 100;
                         $navigation = $module->getNavigation();
