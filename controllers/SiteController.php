@@ -69,7 +69,7 @@ class SiteController extends Controller
     public function beforeAction($action)
     {
         if ($action->id == 'error') {
-            if (!Yii::$app->user->isGuest) {
+            if (!Yii::$app->user->isGuest && Yii::$app->user->can('admin.dashboard')) {
                 $this->layout = 'main';
             } else {
                 $this->layout = 'minimal';
