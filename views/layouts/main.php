@@ -73,7 +73,7 @@ $this->beginContent('@maddoger/admin/views/layouts/base.php');
                 <?php if (isset($this->blocks['header'])): ?>
                     <?= $this->blocks['header'] ?>
                 <?php else: ?>
-                    <h1><?= $this->title ?></h1>
+                    <h1><?= Html::encode($this->title, false) ?></h1>
                     <?= Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]); ?>
