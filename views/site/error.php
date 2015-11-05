@@ -17,6 +17,8 @@ if ($exception instanceof HttpException) {
     $code = YII_DEBUG ? $exception->getCode() : 500;
 }
 
+$this->params['bodyClass'] = 'body-error-page'
+
 ?>
 <div class="error-page">
     <h2 class="headline text-info"> <?= $code ?></h2>

@@ -10,7 +10,7 @@ use maddoger\admin\widgets\Alerts;
 if (!isset($this->params['bodyClass'])) {
     $this->params['bodyClass'] = '';
 }
-$this->params['bodyClass'] .= ' minimal-box-page';
+$this->params['bodyClass'] = 'minimal-box-page '.$this->params['bodyClass'];
 
 ?>
 <?php $this->beginContent('@maddoger/admin/views/layouts/base.php'); ?>
