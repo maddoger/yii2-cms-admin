@@ -221,7 +221,7 @@ class SystemInformationProvider extends Component
         //require($psiRoot.'/read_config.php');
         //exit();
 
-        require($include.'/error/class.Error.inc.php');
+        require($include.'/error/class.PSI_Error.inc.php');
         require($include.'/class.CommonFunctions.inc.php');
         require($include.'/class.Parser.inc.php');
 
