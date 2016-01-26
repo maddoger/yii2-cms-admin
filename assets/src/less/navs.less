@@ -63,13 +63,15 @@
   margin-bottom: 20px;
   background: #fff;
   box-shadow: @box-boxshadow;
+  border-top: 2px solid #c1c1c1;
   border-radius: @box-border-radius;
   > .nav-tabs {
     margin: 0;
     border-bottom-color: #f4f4f4;
     .border-top-radius(@box-border-radius);
     > li {
-      border-top: 3px solid transparent;
+      border-top: 2px solid transparent;
+      margin-top: -2px;
       margin-bottom: -2px;
       > a {
         color: #444;
@@ -92,6 +94,10 @@
           > a:active {
           border-color: transparent;
         }
+      }
+      &.tools {
+        line-height: 40px;
+        padding: 0 5px;
       }
       margin-right: 5px;
     }
