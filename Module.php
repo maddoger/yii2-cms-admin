@@ -136,7 +136,7 @@ class Module extends BackendModule
      */
     public function getName()
     {
-        return Yii::t('maddoger/admin', 'Admin Panel Module');
+        return Yii::t('maddoger/admin', 'Admin Panel');
     }
 
     /**
@@ -154,7 +154,7 @@ class Module extends BackendModule
     {
         return [
             [
-                'label' => Yii::t('maddoger/admin', 'Admin panel'),
+                'label' => Yii::t('maddoger/admin', 'Admin Panel'),
                 'icon' => 'fa fa-gear',
                 'items' => [
                     [
